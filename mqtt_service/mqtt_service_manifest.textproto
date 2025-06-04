@@ -1,0 +1,28 @@
+
+metadata {
+    id {
+        package: "eu.sotec"
+        name: "mqtt_service"
+    }
+    vendor {
+        display_name: "Sotec"
+    }
+    documentation {
+        description: "service to connect to an mqtt broker"
+    }
+    display_name: "MQTT Service"
+}
+service_def {
+    http_config {}
+    service_proto_prefixes: "/eu.sotec.MqttService/"
+    real_spec {
+        image {
+            archive_filename: "tarball.tar"
+        }
+    }
+    sim_spec {
+        image {
+            archive_filename: "tarball.tar"
+        }
+    }
+}

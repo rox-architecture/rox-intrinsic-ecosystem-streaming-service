@@ -1,0 +1,33 @@
+id {
+  package: "eu.sotec"
+  name: "mqtt_publish_skill"
+}
+display_name: "MQTT Publish Skill"
+vendor {
+  display_name: "SOTEC"
+}
+documentation {
+  description: "Skill for publishing MQTT text messages."
+}
+options {
+  supports_cancellation: false
+  python_config {
+    skill_module: "mqtt_publish_skill.mqtt_publish_skill"
+    proto_module: "mqtt_publish_skill.mqtt_publish_skill_pb2"
+    create_skill: "mqtt_publish_skill.mqtt_publish_skill.FlowFnishedSkill"
+  }
+}
+dependencies {
+  required_equipment {
+    key: "mqtt_service"
+    value {
+      capability_names: "eu.sotec.MqttService"
+    }
+  }
+}
+parameter {
+  message_full_name: "eu.sotec.MqttPublishSkillParams"
+  default_value {
+    type_url: "type.googleapis.com/eu.sotec.MqttPublishSkillParams"
+  }
+}

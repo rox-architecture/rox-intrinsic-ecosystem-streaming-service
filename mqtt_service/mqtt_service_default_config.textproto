@@ -1,0 +1,5 @@
+[type.googleapis.com/eu.sotec.mqtt_service_config] {
+    hostname: "10.0.106.175"
+    port: 1883
+    qos: 1
+}

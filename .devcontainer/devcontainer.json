@@ -1,0 +1,5 @@
+{
+  "name": "intrinsic-flowstate-beta",
+  "image": "ghcr.io/intrinsic-ai/intrinsic-dev-img:1.18.20250421",
+  "runArgs": ["--network=host"],
+}
