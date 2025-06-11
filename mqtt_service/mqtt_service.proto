@@ -10,6 +10,7 @@ message mqtt_service_config {
   uint32 qos = 3;
   optional string username = 4;
   optional string password = 5;
+  uint64 publishTimeout = 6;
 }
 
 message mqtt_message {

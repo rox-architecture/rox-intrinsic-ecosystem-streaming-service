@@ -1,5 +1,7 @@
 [type.googleapis.com/eu.sotec.mqtt_service_config] {
     hostname: "10.0.106.175"
     port: 1883
-    qos: 1
+    qos: 1    
+    # Time in ms to wait for a message to be published
+    publishTimeout: 100
 }

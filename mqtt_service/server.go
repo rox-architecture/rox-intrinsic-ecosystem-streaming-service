@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	rcpb "intrinsic/resources/proto/runtime_context_go_proto"
 	"intrinsic/util/proto/protoio"
@@ -23,12 +24,17 @@ type MqttClientServer struct {
 	mqtt_service_proto.UnimplementedMqttServiceServer
 
 	Qos        uint32
+	PublishTimeout time.Duration
 	MqttClient mqtt.Client
 }
 
 func (s MqttClientServer) PublishMessage(ctx context.Context, in *mqtt_service_proto.MqttMessage) (*mqtt_service_proto.Empty, error) {
 	token := s.MqttClient.Publish(in.Topic, byte(s.Qos), in.Retained, in.Message)
-	token.Wait()
+	
+	if token.WaitTimeout(s.PublishTimeout) == false {
+		log.Printf("Timeout: Failed to publish MQTT message.", in.Message, in.Topic)
+		return nil, errors.New("Timeout: Failed to publish MQTT message.")
+	}
 
 	err := token.Error()
 	if err != nil {
@@ -44,6 +50,7 @@ func newMqttClientServer(config *mqtt_service_proto.MqttServiceConfig) *MqttClie
 	mqttClientServer := &MqttClientServer{}
 
 	mqttClientServer.Qos = config.Qos
+	mqttClientServer.PublishTimeout = time.Duration(config.PublishTimeout) * time.Millisecond
 
 	// Setup mqtt client
 	broker := fmt.Sprintf("tcp://%s:%d", config.Hostname, config.Port)
